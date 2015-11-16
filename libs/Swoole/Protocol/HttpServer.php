@@ -28,8 +28,8 @@ class HttpServer extends Swoole\Protocol\WebServer implements  Swoole\IFace\Prot
     function __construct($config = array())
     {
         parent::__construct($config);
-        $mimes = require(LIBPATH . '/data/mimes.php');
-        $this->mime_types = array_flip($mimes);
+        $mime = new Swoole\MimeType;
+        $this->mime_types = array_flip($mime->getAll());
         $this->config = $config;
         $this->parser = new Swoole\Http\Parser;
     }
@@ -47,9 +47,11 @@ class HttpServer extends Swoole\Protocol\WebServer implements  Swoole\IFace\Prot
         }
 
         $this->application = new \Yaf_Application( WEBPATH . "/conf/application.ini" );
+        \Yaf_Registry::set('application', $this->application);
+
         Swoole\Error::$echo_html = true;
         $this->swoole_server = $serv;
-        Swoole::$php->server = $this;
+        //Swoole::$php->server = $this;
         $this->log(self::SOFTWARE . "[#{$worker_id}]. running. on {$this->server->host}:{$this->server->port}");
         set_error_handler(array($this, 'onErrorHandle'), E_USER_ERROR);
         register_shutdown_function(array($this, 'onErrorShutDown'));
@@ -398,8 +400,8 @@ class HttpServer extends Swoole\Protocol\WebServer implements  Swoole\IFace\Prot
     {
         $response = new Swoole\Response;
         $this->currentResponse = $response;
-        \Swoole::$php->request = $request;
-        \Swoole::$php->response = $response;
+        //\Swoole::$php->request = $request;
+        //\Swoole::$php->response = $response;
 
         //请求路径
         if ($request->meta['path'][strlen($request->meta['path']) - 1] == '/')
@@ -511,6 +513,7 @@ class HttpServer extends Swoole\Protocol\WebServer implements  Swoole\IFace\Prot
             $this->application->bootstrap();
             $request_uri = $request->meta['path'];
             $this->application->getDispatcher()->dispatch(new \Yaf_Request_Http($request_uri));
+            
 
             $response->body = ob_get_contents();
         }

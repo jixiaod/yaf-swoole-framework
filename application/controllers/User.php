@@ -16,6 +16,13 @@ class IndexController extends Yaf_Controller_Abstract
         return TRUE;
     }
 
+    public function usersAction()
+    {
+        
+        $model = new UserModel();
+        $result = $model->get(1);
+        var_dump($result);
+    }
 }
 
 
