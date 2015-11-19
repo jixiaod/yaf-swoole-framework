@@ -19,7 +19,11 @@
         "psr-4": {
             "Swoole\\" : "libs/Swoole/",
             "ImReworks\\" : "libs/ImReworks"
-        }
+        },
+        "files":[
+            "libs/lib_config.php"
+        ]
+
     },
     "repositories": [{"packagist": false}]
 }

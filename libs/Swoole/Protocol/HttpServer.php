@@ -36,6 +36,8 @@ class HttpServer extends Swoole\Protocol\WebServer implements  Swoole\IFace\Prot
 
     function onStart($serv, $worker_id = 0)
     {
+        global $yaf;
+
         if (!defined('WEBROOT'))
         {
             define('WEBROOT', $this->config['server']['webroot']);
@@ -45,10 +47,10 @@ class HttpServer extends Swoole\Protocol\WebServer implements  Swoole\IFace\Prot
         {
             Swoole\Console::changeUser($this->config['server']['user']);
         }
-
+        
         $this->application = new \Yaf_Application( WEBPATH . "/conf/application.ini" );
-        \Yaf_Registry::set('application', $this->application);
-
+        $yaf->application = $this->application;
+        
         Swoole\Error::$echo_html = true;
         $this->swoole_server = $serv;
         //Swoole::$php->server = $this;

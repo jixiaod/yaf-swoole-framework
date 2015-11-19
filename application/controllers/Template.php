@@ -1,6 +1,6 @@
 <?php
 
-class UserController extends \ImReworks\Controller
+class TemplateController extends BaseController
 {
     public function listAction()
     {
@@ -9,7 +9,7 @@ class UserController extends \ImReworks\Controller
         //var_dump($result);
         //var_dump($model);
         $this->assign('user_list', $result);
-        //$this->render('user/list.phtml');
+        $this->render('user/list.phtml');
     }
 }
 
