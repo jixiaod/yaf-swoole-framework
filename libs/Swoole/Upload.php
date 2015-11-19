@@ -74,8 +74,8 @@ class Upload
             $this->base_dir .= '/';
         }
         $this->base_url = $config['base_url'];
-        $mimes = require LIBPATH . '/data/mimes.php';
-        $this->mimes = $mimes;
+        $mime = new Swoole\MimeType;
+        $this->mimes = array_flip($mime->getAll());
     }
 
     function error_msg()

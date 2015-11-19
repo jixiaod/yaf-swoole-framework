@@ -15,15 +15,10 @@ class Yaf
                           'redis' => \ImReworks\Redis::class,
                           'mongo' => \ImReworks\Mongo::class,
                           'db' => \Swoole\Database::class,
-                          'cache' => true, //缓存
-                          'event' => \Swoole\Event::class, //异步事件
-                          'log' => \Swoole\Log, //日志
-                          'upload' => true, //上传组件
-                          'user' => true,   //用户验证组件
-                          'session' => true, //session
-                          'http' => true, //http
-                          'url' => true, //urllib
-                          'limit' => true, //频率限制组件
+                          'cache' => \Swoole\Cache::class, 
+                          'event' => \Swoole\Event::class,
+                          'log' => \Swoole\Log::class,
+                          'upload' => \Swoole\Upload::class
                       );
 
     private function __construct()
