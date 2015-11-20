@@ -28,7 +28,7 @@ $AppSvr->setLogger(new Swoole\Log\EchoLog(true)); //Logger
 $server = Swoole\Network\Server::autoCreate('0.0.0.0', 8888);
 $server->setProtocol($AppSvr);
 //$server->daemonize(); //作为守护进程
-$server->run(array('worker_num' => 0, 'max_request' => 5000, 'log_file' => '/tmp/swoole.log'));
+$server->run(array('worker_num' => 4, 'max_request' => 10000, 'log_file' => '/tmp/swoole.log'));
 
 
 

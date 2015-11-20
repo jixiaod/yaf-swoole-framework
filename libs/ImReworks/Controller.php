@@ -4,49 +4,18 @@ namespace ImReworks;
 
 class Controller extends \Yaf_Controller_Abstract
 {
-    protected $_view;
+    public $view;
+    public $yaf;
 
     public function init()
     {
-        $this->_view = $this->getView();
+        $this->yaf = \ImReworks\Yaf::getInstance();
+        $this->view = $this->getView();
     }
 
     public function assign($key, $value)
     {
-        $this->_view->assign($key, $value);
-    }
-
-    public function renderPage()
-    {
-        try {
-            $site = C('APP', 'SITE');
-            $this->_view->assign('jsurl', $site['jsurl']);
-            $module = $this->_request->getModuleName();
-            $this->_view->setScriptPath(APPLICATION_PATH . 'modules/' . $module . '/views/');
-            $this->_view->assign('content_html', $this->_view->render('pages/' .$name. '.phtml'));
-            $this->_view->setScriptPath(TPL_VIEW_PATH);
-            echo $this->_view->render('pages/layout.phtml');
-            exit;
-
-        } catch (Exception $e) {
-            Logger::write($e->__toString(), ERR);
-        }
-    }
-
-    protected function renderTemplate($name)
-    {
-        try {
-            Yaf_Dispatcher::getInstance()->disableView();
-            $module = $this->_request->getModuleName();
-            $this->_view->setScriptPath(APPLICATION_PATH . 'modules/' . $module . '/views/');
-            return $this->_view->render('templates/' .$name. '.tpl');
-
-        } catch (Exception $e) {
-            Logger::write($e->__toString(), Zend_Log::ERR);
-            return false;
-        }
-
-        return true;
+        $this->view->assign($key, $value);
     }
 
     public function getLegalParam($tag, $legalType, $legalList = array(), $default = null)

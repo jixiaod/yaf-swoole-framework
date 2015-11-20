@@ -35,9 +35,12 @@ class Model
 
     function __construct()
     {
-        $this->db = \ImReworks\Yaf::$yaf->db;
+        $this->yaf  = \ImReworks\Yaf::getInstance();
+
+        $this->db   = $this->yaf->db;
         $this->db->connect();
-        $this->dbs = new \Swoole\SelectDB($this->db);
+
+        $this->dbs  = new \Swoole\SelectDB($this->db);
     }
 
     /**

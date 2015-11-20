@@ -12,14 +12,24 @@ class Yaf
     public static $yaf;
 
     static $modules = array(
-                          'redis' => \ImReworks\Redis::class,
-                          'mongo' => \ImReworks\Mongo::class,
-                          'db' => \Swoole\Database::class,
-                          'cache' => \Swoole\Cache::class, 
-                          'event' => \Swoole\Event::class,
-                          'log' => \Swoole\Log::class,
-                          'upload' => \Swoole\Upload::class
+                          'redis'   => ['cls' => \ImReworks\Redis::class, 'cfg' => true],
+                          'mongo'   => ['cls' => \ImReworks\Mongo::class, 'cfg' => true],
+                          'db'      => ['cls' => \Swoole\Database::class, 'cfg' => true],
+                          'cache'   => ['cls' => \Swoole\Cache::class, 'cfg' => true],
+                          'event'   => ['cls' => \Swoole\Event::class, 'cfg' => true],
+                          'log'     => ['cls' => \Swoole\Log::class, 'cfg' => true],
+                          'upload'  => ['cls' => \Swoole\Upload::class, 'cfg' => true],
+                          'session' => ['cls' => \ImReworks\Session::class, 'cfg' => true]
                       );
+
+    public static function getInstance()
+    {
+        if (!self::$yaf) {
+            self::$yaf = new Yaf;
+        }
+
+        return self::$yaf;
+    }
 
     private function __construct()
     {
@@ -33,27 +43,41 @@ class Yaf
         }
 
         define('APPSPATH', $this->app_path);
-
         $this->config = new \ImReworks\Config;
         $this->config->setPath(APPSPATH . '/configs');
     }
 
-    public static function getInstance()
-    {
-        if (!self::$yaf) {
-            self::$yaf = new Yaf;
-        }
-
-        return self::$yaf;
-    }
 
     public function __get($name)
     {
-        //如果不存在此对象，从工厂中创建一个
         if (false == \Yaf_Registry::has($name)) {
-            //载入组件
-            $config = $this->config['db'][YAF_ENVIRON];
-            \Yaf_Registry::set($name, new self::$modules[$name]($config));
+            return $this->loadModule($name);
+        }
+
+        return \Yaf_Registry::get($name);
+    }
+
+    public function loadModule($name, $key = 'master')
+    {
+        // module 不存在
+        if (!array_key_exists($name, self::$modules)) {
+            throw new \ImReworks\Exception\ModuleNotFound("module [$module] not found.");
+        }
+
+        // module 需要有配置
+        if (self::$modules[$name]['cfg']) {
+            // 配置存在
+            if (isset($this->config[$name][YAF_ENVIRON][$key])) {
+                
+                $config = $this->config[$name][YAF_ENVIRON][$key];
+                \Yaf_Registry::set($name, new self::$modules[$name]['cls']($config));
+
+            } else {
+                throw new \ImReworks\Exception\ConfigNotFound("{$name}->". YAF_ENVIRON ." is not found.");
+            }
+
+        } else {
+            \Yaf_Registry::set($name, new self::$modules[$name]);
         }
 
         return \Yaf_Registry::get($name);
@@ -61,19 +85,11 @@ class Yaf
 
     public function __call($func, $args)
     {
-        //如果不存在此对象，从工厂中创建一个
-        if (false == \Yaf_Registry::haf($name)) {
-            //载入组件
-            $env = YAF_ENVIRON;
-            $config = \Yaf_Registry::get('config')->$name->$env;
-            \Yaf_Registry::set($name, new self::$modules[$name]($config));
+        if (false == \Yaf_Registry::has($func)) {
+            return $this->loadModule($func, $args[0]);
         }
 
-        return \Yaf_Registry::get($name);
+        return \Yaf_Registry::get($func);
     }
-
 }
-
-
-
 

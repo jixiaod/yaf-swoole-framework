@@ -1,6 +1,6 @@
 <?php
 
-namespace ImReworks\Redis;
+namespace ImReworks;
 
 class Redis
 {
@@ -26,7 +26,7 @@ class Redis
     {
         $this->_HOST = $config['host'];
         $this->_PORT = $config['port'];
-        $this->_AUTH = $config['pass'];
+        $this->_AUTH = $config['auth'];
 
         if (!isset($this->_REDIS)) {
             $this->_REDIS = new \redis();
