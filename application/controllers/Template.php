@@ -1,15 +1,12 @@
 <?php
 
-class TemplateController extends BaseController
+class TemplateController extends \ImReworks\BaseController
 {
-    public function listAction()
+    public function indexAction()
     {
-        $model = new UserModel();
-        $result = $model->get(1);
-        //var_dump($result);
-        //var_dump($model);
-        $this->assign('user_list', $result);
-        $this->render('user/list.phtml');
+        $user_list = array('小明', '小强');
+        $this->assign('user_list', $user_list);
+        $this->renderPage('user/list');
     }
 }
 

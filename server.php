@@ -1,6 +1,6 @@
 <?php
 
-define('DEBUG', 'on');
+define('DEBUG', 'off');
 define("WEBPATH", realpath(__DIR__));
 
 if (!include __DIR__.'/vendor/autoload.php') {

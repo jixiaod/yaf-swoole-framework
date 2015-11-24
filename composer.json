@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Swoole\\" : "libs/Swoole/",
+            "Swoole\\" : "libs/Swoole",
             "ImReworks\\" : "libs/ImReworks"
         },
         "files":[

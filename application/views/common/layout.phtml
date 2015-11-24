@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="A general yaf framework which running on swoole.">
+        <meta name="keywords" content="yaf swoole framework 100dos">
+        <meta name="author" content="tiger">
+        <title><?php echo $this->sitename;?></title>
+ 
+        <?php echo $this->css_inc_html;?>
+     </head>
+
+    <body class="tooltips">
+        <!--
+        ===========================================================
+        BEGIN PAGE
+        ===========================================================
+        -->
+        <div class="wrapper">
+            <?php echo $this->content_html;?>
+
+                <!-- BEGIN FOOTER -->
+                <footer>
+                    &copy; 2015 <a href="http://www.100dos.com" target="_blank">百作坊</a><br />
+                </footer>
+                <!-- END FOOTER -->
+                
+        </div><!-- /.wrapper -->
+
+        <!--
+        ===========================================================
+        END PAGE
+        ===========================================================
+        -->
+    </body>
+        <?php echo $this->js_inc_html;?>
+</html>

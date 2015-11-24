@@ -9,9 +9,12 @@ class Controller extends \Yaf_Controller_Abstract
 
     public function init()
     {
+        $this->initialize();
         $this->yaf = \ImReworks\Yaf::getInstance();
         $this->view = $this->getView();
     }
+
+    public function initialize(){}
 
     public function assign($key, $value)
     {
@@ -193,3 +196,6 @@ class Controller extends \Yaf_Controller_Abstract
         }
     }
 }
+
+
+

@@ -139,7 +139,7 @@ class Response
         }
         if (!isset($this->head['Content-Type']))
         {
-            $this->head['Content-Type'] = 'text/html; charset='.\Swoole::$charset;
+            $this->head['Content-Type'] = 'text/html; charset=utf-8';
         }
         if (!isset($this->head['Content-Length']))
         {

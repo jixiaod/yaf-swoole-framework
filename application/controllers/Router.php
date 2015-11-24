@@ -33,7 +33,6 @@ class RouterController extends \ImReworks\Controller
 
         return false;
     }
-
 }
 
 
