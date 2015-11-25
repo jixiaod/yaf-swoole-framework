@@ -6,11 +6,13 @@ class Controller extends \Yaf_Controller_Abstract
 {
     public $view;
     public $yaf;
+    public $log;
 
     public function init()
     {
         $this->initialize();
         $this->yaf = \ImReworks\Yaf::getInstance();
+        $this->log = $this->yaf->log;
         $this->view = $this->getView();
     }
 

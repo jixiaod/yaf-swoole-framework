@@ -2,8 +2,6 @@
 
 namespace ImReworks;
 
-use Swoole\Exception\NotFound;
-
 class Yaf
 {
     public $app_path;
@@ -17,7 +15,7 @@ class Yaf
                           'db'      => ['cls' => \Swoole\Database::class, 'cfg' => true],
                           'cache'   => ['cls' => \Swoole\Cache::class, 'cfg' => true],
                           'event'   => ['cls' => \Swoole\Event::class, 'cfg' => true],
-                          'log'     => ['cls' => \Swoole\Log::class, 'cfg' => true],
+                          'log'     => ['cls' => \Swoole\Log\FileLog::class, 'cfg' => true],
                           'upload'  => ['cls' => \Swoole\Upload::class, 'cfg' => true],
                           'session' => ['cls' => \ImReworks\Session::class, 'cfg' => true]
                       );
@@ -38,7 +36,7 @@ class Yaf
                 $this->app_path = WEBPATH . '/application';
 
             } else {
-                Swoole\Error::info("core error", __CLASS__.": Swoole::\$app_path and WEBPATH empty.");
+                \Swoole\Error::info("core error", __CLASS__.": Swoole::\$app_path and WEBPATH empty.");
             }
         }
 
@@ -46,7 +44,6 @@ class Yaf
         $this->config = new \ImReworks\Config;
         $this->config->setPath(APPSPATH . '/configs');
     }
-
 
     public function __get($name)
     {

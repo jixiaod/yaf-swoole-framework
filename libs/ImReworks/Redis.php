@@ -27,6 +27,7 @@ class Redis
         $this->_HOST = $config['host'];
         $this->_PORT = $config['port'];
         $this->_AUTH = $config['auth'];
+        $this->_TIMEOUT = $config['timeout'];
 
         if (!isset($this->_REDIS)) {
             $this->_REDIS = new \redis();
